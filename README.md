@@ -19,3 +19,17 @@ sleeve.on('load', function() {
 
 sleeve('load');
 ```
+
+## Extra Goodness
+
+- as mentioned above, sleeve events are namespaced so two sleeves won't capture each others events.
+
+- sleeve makes the `on` and `once` functions chainable, if you need to work with the original eve functionality (setting handler "zIndex") then use the `_on` and `_once` functions.
+
+- the magical sleeve check function (in development - see [the check test](https://github.com/DamonOehlman/sleeve/blob/master/test/check.js))
+
+- sleeve has some tests which validate both sleeve and eve work as designed.
+
+## TODO
+
+- Make work on the clientside as well as node
