@@ -1,6 +1,6 @@
 # sleeve - eve events + extras
 
-Sleeve is a wrapper around the wonder event library, [eve](https://github.com/DmitryBaranovskiy/eve).  If it does anything cool, then it's all thanks to that library.
+Sleeve is a wrapper around the wonderful event library, [eve](https://github.com/DmitryBaranovskiy/eve).  If it does anything cool, then it's all thanks to that library.
 
 ## Example Usage
 
