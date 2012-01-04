@@ -9,15 +9,14 @@ Similar to eve, but namespaced:
 ```js
 var sleeve = require('sleeve')('ns');
 
-sleeve.on('*', function() {
-	console.log('some event fired');
-});
-
-sleeve.on('load', function() {
-	console.log('loaded');
-});
-
-sleeve('load');
+sleeve
+	.on('*', function() {
+		console.log('some event fired');
+	})
+	.on('load', function() {
+		console.log('loaded');
+	})
+	.emit('load');
 ```
 
 ## Extra Goodness

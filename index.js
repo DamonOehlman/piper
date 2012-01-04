@@ -74,6 +74,11 @@ function sleeve(ns) {
         };
     });
     
+    // map nt
+    _sleeve.nt = function() {
+        return eve.nt().slice(ns.length + 1);
+    };
+    
     // map a reference to eve to this sleeve
     _sleeve.eve = eve;
     _sleeve.ns = function() { return ns; };
