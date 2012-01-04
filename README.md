@@ -9,6 +9,22 @@ Similar to eve, but namespaced:
 ```js
 var sleeve = require('sleeve')('ns');
 
+sleeve.on('*', function() {
+	console.log('some event fired');
+});
+
+sleeve.on('load', function() {
+	console.log('loaded');
+});
+
+sleeve('load');
+```
+
+_or with chaining and the familiar emit function_
+
+```js
+var sleeve = require('sleeve')('ns');
+
 sleeve
 	.on('*', function() {
 		console.log('some event fired');
