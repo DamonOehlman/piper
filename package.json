@@ -16,10 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/DamonOehlman/cleave.git"
+    "url": "git://github.com/DamonOehlman/sleeve.git"
   },
   "bugs": {
-    "url": "http://github.com/DamonOehlman/cleave/issues"
+    "url": "http://github.com/DamonOehlman/sleeve/issues"
   },
   
   "scripts": { 
