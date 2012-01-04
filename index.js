@@ -12,7 +12,10 @@ function sleeve(ns) {
         return eve.apply(eve, [ns + '.' + name].concat(Array.prototype.slice.call(arguments, 1)));
     };
     
-    // make the simple emit function
+    // make the simple emit function, which maps to sleeve
+    _sleeve.emit = _sleeve;
+    
+    // check
     _sleeve.check = function() {
         var checkSleeve = sleeve(), // create a new sleeve to handle result checking
             results = _sleeve.apply(_sleeve, Array.prototype.slice.call(arguments)) || [];
@@ -24,7 +27,7 @@ function sleeve(ns) {
                 }),
                 passed = true;
                 
-            console.log(results);
+            // console.log(results);
                 
             // iterate through the results and update the passed status
             results.forEach(function(result) {
@@ -34,7 +37,7 @@ function sleeve(ns) {
             });
             
             // if we haven't passed, fail
-            console.log(passed);
+            // console.log(passed);
             if (! passed) {
                 checkSleeve('fail');
             }
