@@ -1,0 +1,30 @@
+{
+  "name": "sleeve",
+  "description": "Eve event library (plus some wrapper goodness - namespaces, etc)",
+  "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
+  "tags": [
+    "eve",
+    "events"
+  ],
+  "version": "0.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": ">= 0.4.x < 0.7.0"
+  },
+  "dependencies": {
+    "debug": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DamonOehlman/cleave.git"
+  },
+  "bugs": {
+    "url": "http://github.com/DamonOehlman/cleave/issues"
+  },
+  
+  "scripts": { 
+      "test": "mocha --reporter spec"
+  },
+  
+  "contributors": []
+}
