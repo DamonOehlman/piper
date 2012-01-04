@@ -8,18 +8,48 @@ function sleeve(ns) {
     // generate a namespace if one was not defined
     ns = ns || ('sleeve' + (counter++));
     
-    // create the sleeve function uber function
     _sleeve = function(name) {
-        // emit the event and capture the results
-        var results = eve.apply(eve, [ns + '.' + name].concat(Array.prototype.slice.call(arguments, 1)));
-        
-        // iterate through the results
-        
+        return eve.apply(eve, [ns + '.' + name].concat(Array.prototype.slice.call(arguments, 1)));
     };
     
     // make the simple emit function
-    _sleeve.emit = function(name) {
-        return eve.apply(eve, [ns + '.' + name].concat(Array.prototype.slice.call(arguments, 1)));
+    _sleeve.check = function() {
+        var checkSleeve = sleeve(), // create a new sleeve to handle result checking
+            results = _sleeve.apply(_sleeve, Array.prototype.slice.call(arguments)) || [];
+            
+        // iterate through the results
+        setTimeout(function() {
+            var queuedChecks = results.filter(function(result) {
+                    return typeof result == 'function';
+                }),
+                passed = true;
+                
+            console.log(results);
+                
+            // iterate through the results and update the passed status
+            results.forEach(function(result) {
+                if (typeof result != 'undefined' && typeof result != 'function') {
+                    passed = passed && result;
+                }
+            });
+            
+            // if we haven't passed, fail
+            console.log(passed);
+            if (! passed) {
+                checkSleeve('fail');
+            }
+            // otherwise, if we have no queued checks, then wait
+            else if (queuedChecks.length === 0) {
+                checkSleeve('pass');
+            }
+            // otherwise, run the queued checks
+            else {
+                
+            }
+        }, 0);
+        
+        // retu
+        return checkSleeve;
     };
 
     // map other eve functions to sleeve
