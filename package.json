@@ -11,9 +11,6 @@
   "engines": {
     "node": ">= 0.4.x < 0.7.0"
   },
-  "dependencies": {
-    "debug": "*"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/DamonOehlman/sleeve.git"
