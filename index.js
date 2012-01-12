@@ -47,7 +47,26 @@ function sleeve(ns) {
             }
             // otherwise, run the queued checks
             else {
+                var remainingChecks = queuedChecks.length,
+                    failed = false;
                 
+                // iterate through each of the queued checks, passing the callback in
+                queuedChecks.forEach(function(check) {
+                    check(function(err) {
+                        if (err && (!failed)) {
+                            failed = true;
+                            checkSleeve('fail');
+                        }
+                        
+                        // decrement the checks remaining
+                        remainingChecks--;
+                        
+                        // if the remaining checks are at 0, then trigger pass if not failed
+                        if (remainingChecks <= 0 && (! failed)) {
+                            checkSleeve('pass');
+                        }
+                    });
+                });
             }
         }, 0);
         
