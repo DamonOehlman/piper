@@ -41,7 +41,7 @@ function sleeve(ns) {
             if (! passed) {
                 checkSleeve('fail');
             }
-            // otherwise, if we have no queued checks, then wait
+            // otherwise, if we have no queued checks, then pass
             else if (queuedChecks.length === 0) {
                 checkSleeve('pass');
             }
