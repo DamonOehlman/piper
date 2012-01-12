@@ -24,4 +24,19 @@ describe('events raised can be checked', function() {
         
         sleeve.check('boo').on('fail', done);
     });
+    
+    it('check waits when handlers return a function', function(done) {
+        sleeve.once('hi', function() {
+            return function(callback) {
+                setTimeout(callback, 1000);
+            };
+        });
+        
+        var checker = sleeve.check('hi');
+        
+        // delay adding the checker for 200ms
+        setTimeout(function() {
+            checker.on('pass', done);
+        }, 200);
+    });
 });
