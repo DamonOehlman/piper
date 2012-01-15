@@ -1,10 +1,14 @@
 .. include:: ../README.rst
 
-Contents:
+Contents
+========
 
 .. toctree::
    :maxdepth: 2
-
+   
+   namespacing
+   chaining
+   result-checking
 
 Indices and tables
 ==================

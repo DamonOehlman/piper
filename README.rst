@@ -20,12 +20,18 @@ The big difference with eve is that it provides an eventing system that is not b
 
 Sleeve requires you to namespace events by default, so you can use eve eventing without having to manually namespace your events.
 
+`More Information <http://sleeve.readthedocs.org/en/latest/namespacing.html>`_
+
 Function Chaining
 -----------------
 
 When registering event handlers in eve standard, the ``on`` function returns another function that allows you to tweak the order of the event handler in the list of registered handlers.  While this is definitely useful in some instances, Sleeve returns a sleeve reference that you can for function chaining.
 
+`More Information <http://sleeve.readthedocs.org/en/latest/chaining.html>`_
+
 Event Result Checking
 ---------------------
 
 Eve does a wonderful job of returning results from event handlers when you call ``eve('eventname')`` to trigger an event.  Sleeve builds on this functionality to provide asynchronous event handling.
+
+`More Information <http://sleeve.readthedocs.org/en/latest/result-checking.html>`_
