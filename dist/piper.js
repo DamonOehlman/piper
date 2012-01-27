@@ -327,7 +327,7 @@
         ns = ns || ('evtpipe' + (counter++));
         
         _pipe = function(name) {
-            return eve.apply(eve, [ns + '.' + name].concat(Array.prototype.slice.call(arguments, 1)));
+            return eve.apply(eve, [ns + '.' + name, null].concat(Array.prototype.slice.call(arguments, 1)));
         };
         
         // make the simple emit function, which maps to sleeve
@@ -345,8 +345,6 @@
                     }),
                     passed = true;
                     
-                // console.log(results);
-                    
                 // iterate through the results and update the passed status
                 results.forEach(function(result) {
                     if (typeof result != 'undefined' && typeof result != 'function') {
@@ -355,7 +353,6 @@
                 });
                 
                 // if we haven't passed, fail
-                // console.log(passed);
                 if (! passed) {
                     checkSleeve('fail');
                 }
@@ -473,6 +470,12 @@
     
     Bridge.prototype.addTransport = function(transport) {
         this.transports.push(transport);
+    
+        // if we are currently publishing and the new transport has a pub method
+        if (Object.keys(this.bindings).length > 0 && typeof transport.pub == 'function') {
+            // call it
+            transport.pub();
+        }
     };
     
     Bridge.prototype.pub = function(events) {
@@ -496,6 +499,13 @@
                         transport.send(msg);
                     });
                 });
+            }
+        });
+        
+        // iterate through the transports and call any that have a pub function
+        this.transports.forEach(function(transport) {
+            if (typeof transport.pub == 'function') {
+                transport.pub();
             }
         });
         
@@ -550,6 +560,13 @@
         
         // reset the bindings
         this.bindings = {};
+        
+        // if the transports have an unpub function, then call it
+        this.transports.forEach(function(transport) {
+            if (typeof transport.unpub == 'function') {
+                transport.unpub();
+            }
+        });
         
         return this;
     };

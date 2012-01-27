@@ -11,7 +11,7 @@ function piper(ns) {
     ns = ns || ('evtpipe' + (counter++));
     
     _pipe = function(name) {
-        return eve.apply(eve, [ns + '.' + name].concat(Array.prototype.slice.call(arguments, 1)));
+        return eve.apply(eve, [ns + '.' + name, null].concat(Array.prototype.slice.call(arguments, 1)));
     };
     
     // make the simple emit function, which maps to sleeve
@@ -29,8 +29,6 @@ function piper(ns) {
                 }),
                 passed = true;
                 
-            // console.log(results);
-                
             // iterate through the results and update the passed status
             results.forEach(function(result) {
                 if (typeof result != 'undefined' && typeof result != 'function') {
@@ -39,7 +37,6 @@ function piper(ns) {
             });
             
             // if we haven't passed, fail
-            // console.log(passed);
             if (! passed) {
                 checkSleeve('fail');
             }

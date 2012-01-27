@@ -12,7 +12,7 @@ describe('events get raised through the on handler', function() {
     });
 
     it('can raise an event through on', function(done) {
-        pipe.on('hi', done);
+        pipe.once('hi', done);
         pipe('hi');
     });
     
@@ -22,7 +22,16 @@ describe('events get raised through the on handler', function() {
     });
     
     it('raises events in eve on the namespace', function(done) {
-        piper.eve.on(pipe.ns() + '.*', done);
+        piper.eve.once(pipe.ns() + '.*', done);
         pipe('again');
+    });
+    
+    it('correctly maps event arguments', function(done) {
+        pipe.once('hit', function(thing) {
+            expect(thing).to.equal('car');
+            done();
+        });
+        
+        pipe('hit', 'car');
     });
 });
