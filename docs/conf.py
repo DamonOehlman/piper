@@ -23,7 +23,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'sleeve'
+project = u'piper'
 copyright = u'2012, Damon Oehlman <damon.oehlman@sidelab.com>'
 
 # The version info for the project you're documenting, acts as replacement for

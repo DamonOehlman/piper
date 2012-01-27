@@ -1,6 +1,6 @@
 {
     "name": "piper",
-    "description": "Piper - Amazing Event Handling and Routing using Eve",
+    "description": "Amazing Event Handling and Routing using Eve",
     "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
     "tags": ["eve", "pubsub"],
     "version": "0.0.1",
