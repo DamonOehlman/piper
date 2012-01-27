@@ -1,7 +1,8 @@
 var eve = require('./eve');
 
 var counter = 0,
-    reLeadingUnderscore = /^_/;
+    reLeadingUnderscore = /^_/,
+    reEveDelimiter = /[\/\.]/;
 
 function piper(ns) {
     var _pipe;
@@ -88,8 +89,33 @@ function piper(ns) {
 
     // create chainable versions of on and once
     ['on', 'once'].forEach(function(fnName) {
-        _pipe[fnName] = function() {
-            _pipe['_' + fnName].apply(_pipe, Array.prototype.slice.call(arguments));
+        _pipe[fnName] = function(name, handler) {
+            // handle the event
+            eve[fnName].call(eve, ns + '.' + name, function() {
+                // grab the event name
+                var nameParts = eve.nt().split(reEveDelimiter),
+                    args = Array.prototype.slice.call(arguments),
+                    targetObject = nameParts[nameParts.length - 1];
+                
+                // if this is an object specific event, then map it to the object
+                if (nameParts.length > 1 && targetObject[0] === '#') {
+                    // remove the leading #
+                    targetObject = targetObject.slice(1);
+                    
+                    // if we are in a browser and have a getElementById method, let's take a look for it
+                    if (typeof document != 'undefined' && typeof document.getElementById == 'function') {
+                        // find the element, but default back to the id if not found
+                        targetObject = document.getElementById(targetObject) || targetObject;
+                    }
+                    
+                    // prepend the object to the args
+                    args.unshift(targetObject);
+                }
+                
+                // call the handler
+                return handler.apply(this, args);
+            });
+            
             return _pipe;
         };
     });
