@@ -317,7 +317,8 @@
     function debug() {};
     
     var counter = 0,
-        reLeadingUnderscore = /^_/;
+        reLeadingUnderscore = /^_/,
+        reEveDelimiter = /[\/\.]/;
     
     function piper(ns) {
         var _pipe;
@@ -404,8 +405,39 @@
     
         // create chainable versions of on and once
         ['on', 'once'].forEach(function(fnName) {
-            _pipe[fnName] = function() {
-                _pipe['_' + fnName].apply(_pipe, Array.prototype.slice.call(arguments));
+            _pipe[fnName] = function(name, handler) {
+                // handle the event
+                eve[fnName].call(eve, ns + '.' + name, function() {
+                    // grab the event name
+                    var evtName = eve.nt(),
+                        args = Array.prototype.slice.call(arguments),
+                        nameParts, targetObject;
+                        
+                    // if this handler is not for this specific object id
+                    if (evtName !== ns + '.' + name) {
+                        nameParts = evtName.split(reEveDelimiter);
+                        targetObject = nameParts[nameParts.length - 1];
+                        
+                        // if this is an object specific event, then map it to the object
+                        if (nameParts.length > 1 && targetObject[0] === '#') {
+                            // remove the leading #
+                            targetObject = targetObject.slice(1);
+    
+                            // if we are in a browser and have a getElementById method, let's take a look for it
+                            if (typeof document != 'undefined' && typeof document.getElementById == 'function') {
+                                // find the element, but default back to the id if not found
+                                targetObject = document.getElementById(targetObject) || targetObject;
+                            }
+    
+                            // prepend the object to the args
+                            args.unshift(targetObject);
+                        }
+                    }
+                    
+                    // call the handler
+                    return handler.apply(this, args);
+                });
+                
                 return _pipe;
             };
         });
@@ -421,6 +453,8 @@
         return _pipe;
     } // Sleeve
 
+    var reSeparator = /[\s\,\|]/;
+    
     function Bridge(eveInstance, transports) {
         // save a reference to eve
         this.eve = eveInstance;
@@ -447,17 +481,16 @@
         (events || ['*']).forEach(function(pattern) {
             if (! bridge.bindings[pattern]) {
                 bridge.eve.on(pattern, bridge.bindings[pattern] = function() {
-                    // serialize the args
-                    var evtName = bridge.eve.nt(),
-                        msg = {
-                            name: evtName,
-                            args: arguments.length > 0 ? Array.prototype.slice.call(arguments) : undefined
-                        };
-    
-                    // send the message
-                    // serialize the message as json
-                    msg = JSON.stringify(msg);
+                    var args, msg;
                     
+                    // if the last argument is the bridge, then return as we have generated it
+                    // from a subscription
+                    if (arguments[arguments.length - 1] === bridge) return;
+                    
+                    // serialize the args
+                    args = [bridge.eve.nt()].concat(Array.prototype.slice.call(arguments));
+                    msg = JSON.stringify(args);
+    
                     // iterate through the transports and send the message
                     bridge.transports.forEach(function(transport) {
                         transport.send(msg);
@@ -470,23 +503,40 @@
     };
     
     Bridge.prototype.sub = function() {
-        var bridge = this;
+        var bridge = this,
+            args;
+            
+        function forwardMessage(msg) {
+            if (msg) {
+                try {
+                    // deconstruct message and insert a fake eve scope param
+                    args = JSON.parse(msg);
+                }
+                catch (e) {
+                    // not a JSON parseable message, let's trying splitting the string on valid separators
+                    args = msg.split(reSeparator);
+                    
+                    // TODO: should probably parse int things that look ok etc
+                }
+                
+                if (args && args.length > 0) {
+                    // insert the fake scope parameter
+                    args.splice(1, 0, null);
+    
+                    // add a reference to the bridge as the last argument
+                    // this way we can make sure we don't create an echo chamber
+                    args.push(bridge);
+                    
+                    // fire the event
+                    bridge.eve.apply(bridge.eve, args);
+                }
+            }
+        }
         
         // list for events on each of the transports
         this.transports.forEach(function(transport) {
             // TODO: wire up subscriptions
-            transport.sub(function(json) {
-                try {
-                    // deconstruct message
-                    var msg = JSON.parse(json);
-    
-                    // fire the event
-                    bridge.eve.apply(bridge.eve, [msg.name, null].concat(msg.args ? msg.args : []));
-                }
-                catch (e) {
-                    // dodgy message, ignoring...
-                }
-            });
+            transport.sub(forwardMessage);
         });
         
         return this;

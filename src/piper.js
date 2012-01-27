@@ -91,23 +91,29 @@ function piper(ns) {
             // handle the event
             eve[fnName].call(eve, ns + '.' + name, function() {
                 // grab the event name
-                var nameParts = eve.nt().split(reEveDelimiter),
+                var evtName = eve.nt(),
                     args = Array.prototype.slice.call(arguments),
+                    nameParts, targetObject;
+                    
+                // if this handler is not for this specific object id
+                if (evtName !== ns + '.' + name) {
+                    nameParts = evtName.split(reEveDelimiter);
                     targetObject = nameParts[nameParts.length - 1];
-                
-                // if this is an object specific event, then map it to the object
-                if (nameParts.length > 1 && targetObject[0] === '#') {
-                    // remove the leading #
-                    targetObject = targetObject.slice(1);
                     
-                    // if we are in a browser and have a getElementById method, let's take a look for it
-                    if (typeof document != 'undefined' && typeof document.getElementById == 'function') {
-                        // find the element, but default back to the id if not found
-                        targetObject = document.getElementById(targetObject) || targetObject;
+                    // if this is an object specific event, then map it to the object
+                    if (nameParts.length > 1 && targetObject[0] === '#') {
+                        // remove the leading #
+                        targetObject = targetObject.slice(1);
+
+                        // if we are in a browser and have a getElementById method, let's take a look for it
+                        if (typeof document != 'undefined' && typeof document.getElementById == 'function') {
+                            // find the element, but default back to the id if not found
+                            targetObject = document.getElementById(targetObject) || targetObject;
+                        }
+
+                        // prepend the object to the args
+                        args.unshift(targetObject);
                     }
-                    
-                    // prepend the object to the args
-                    args.unshift(targetObject);
                 }
                 
                 // call the handler
