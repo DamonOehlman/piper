@@ -18,6 +18,7 @@ describe('publishing', function() {
         testClient.on('message', function(channel, msg) {
             if (channel == 'test') {
                 msg = JSON.parse(msg);
+                expect(msg).to.include('hit.arm');
 
                 testClient.unsubscribe();
                 done();
