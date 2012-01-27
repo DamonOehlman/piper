@@ -2,13 +2,16 @@ var piper = require('../../'),
     eve = piper.eve,
     redis = require('redis'),
     expect = require('chai').expect,
-    redisTransport = piper.createTransport('redis', 'test'),
     testClient = redis.createClient(),
-    bridge;
+    transport, bridge;
 
 describe('publishing', function() {
+    it('can create the transport', function() {
+        transport = piper.createTransport('redis', 'test');
+    });
+    
     it('can create the bridge', function() {
-        bridge = piper.bridge(redisTransport).pub();
+        bridge = piper.bridge(transport).pub();
     });
     
     it('can send a message over the bridge', function(done) {
@@ -34,8 +37,10 @@ describe('publishing', function() {
     });
     
     it('can receive messages from redis', function(done) {
-        eve.on('hit.arm', done);
+        eve.on('hit.arm', function() {
+            done();
+        });
         
-        testClient.publish('test', '{ "name": "hit.arm" }');
+        testClient.publish('test', 'hit.arm');
     });
 });
