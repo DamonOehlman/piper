@@ -3,7 +3,7 @@
     "description": "Amazing Event Handling and Routing using Eve",
     "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
     "tags": ["eve", "pubsub"],
-    "version": "0.1.0",
+    "version": "0.1.1",
     
     "main": "_lib-generated/piper.js",
     "engines": { "node": ">= 0.4.x < 0.7.0" },
