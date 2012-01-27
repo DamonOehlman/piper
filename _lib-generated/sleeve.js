@@ -1,6 +1,7 @@
+var eve = require('./eve');
+
 var counter = 0,
-    reLeadingUnderscore = /^_/,
-    eve = require('./lib/eve');
+    reLeadingUnderscore = /^_/;
 
 function sleeve(ns) {
     var _sleeve;
@@ -105,6 +106,9 @@ function sleeve(ns) {
     return _sleeve;
 } // Sleeve
 
-module.exports = function(ns) {
+
+exports = module.exports = function(ns) {
     return sleeve(ns);
 };
+
+exports.bridge = require('./bridge');

@@ -1,27 +1,30 @@
 {
-  "name": "sleeve",
-  "description": "Eve event library (plus some wrapper goodness - namespaces, etc)",
-  "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
-  "tags": [
-    "eve",
-    "events"
-  ],
-  "version": "0.0.1",
-  "main": "index.js",
-  "engines": {
-    "node": ">= 0.4.x < 0.7.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/DamonOehlman/sleeve.git"
-  },
-  "bugs": {
-    "url": "http://github.com/DamonOehlman/sleeve/issues"
-  },
-  
-  "scripts": { 
-      "test": "mocha --reporter spec"
-  },
-  
-  "contributors": []
+    "name": "sleeve",
+    "description": "Eve messaging for node (with goodies)",
+    "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
+    "tags": ["eve", "pubsub"],
+    "version": "0.0.1",
+    
+    "main": "_lib-generated/sleeve.js",
+    "engines": { "node": ">= 0.4.x < 0.7.0" },
+        
+    "dependencies": {
+    },
+    
+    "devDependencies": {
+        "chai": "*",
+        "interleave": "0.1.x"
+    },
+    
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/sidelab/sleeve.git"
+    },
+    
+    "bugs": {
+        "url": "http://github.com/sidelab/sleeve/issues"
+    },
+    
+    "contributors": [
+    ]
 }
