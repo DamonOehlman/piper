@@ -6,6 +6,7 @@ Contents
 .. toctree::
    :maxdepth: 2
    
+   getting-started
    namespacing
    bridging
    chaining
