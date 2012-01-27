@@ -18,6 +18,12 @@ function Bridge(eveInstance, transports) {
 
 Bridge.prototype.addTransport = function(transport) {
     this.transports.push(transport);
+
+    // if we are currently publishing and the new transport has a pub method
+    if (Object.keys(this.bindings).length > 0 && typeof transport.pub == 'function') {
+        // call it
+        transport.pub();
+    }
 };
 
 Bridge.prototype.pub = function(events) {
@@ -41,6 +47,13 @@ Bridge.prototype.pub = function(events) {
                     transport.send(msg);
                 });
             });
+        }
+    });
+    
+    // iterate through the transports and call any that have a pub function
+    this.transports.forEach(function(transport) {
+        if (typeof transport.pub == 'function') {
+            transport.pub();
         }
     });
     
@@ -95,6 +108,13 @@ Bridge.prototype.unpub = function() {
     
     // reset the bindings
     this.bindings = {};
+    
+    // if the transports have an unpub function, then call it
+    this.transports.forEach(function(transport) {
+        if (typeof transport.unpub == 'function') {
+            transport.unpub();
+        }
+    });
     
     return this;
 };
