@@ -1,10 +1,11 @@
-var sleeve = require('../')('ns');
+var piper = require('../'),
+    pipe = piper('ns');
 
-sleeve
-	.on('*', function() {
-	    console.log('run: ' + sleeve.nt());
-	})
-	.on('load', function(input) {
-		console.log('loaded');
-	})
-	.emit(process.argv.slice(2));
+pipe
+    .on('*', function() {
+        console.log('run: ' + piper.eve.nt());
+    })
+    .on('load', function(input) {
+        console.log('loaded');
+    })
+    .emit(process.argv.slice(2));
