@@ -1,12 +1,12 @@
-var assert = require('assert'),
-    one = require('../')('1'),
-    two = require('../')('2');
+var expect = require('chai').expect,
+    one = require('./helpers/piper')('1'),
+    two = require('./helpers/piper')('2');
     
 describe('events raised in one namespace are not triggered in the other', function() {
     it('namespaced functions are valid and different', function() {
-        assert.ok(one.on);
-        assert.ok(two.on);
-        assert.notEqual(one, two);
+        expect(one.on).to.exist;
+        expect(two.on).to.exist;
+        expect(one).to.not.equal(two);
     });
     
     it('one should not capture events raised in two', function(done) {

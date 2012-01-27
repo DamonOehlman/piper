@@ -1,4 +1,4 @@
-var sleeve = (function() {
+(function(glob) {
     // ┌──────────────────────────────────────────────────────────────────────────────────────┐ \\
     // │ Eve 0.3.3 - JavaScript Events Library                                                │ \\
     // ├──────────────────────────────────────────────────────────────────────────────────────┤ \\
@@ -316,23 +316,23 @@ var sleeve = (function() {
     var counter = 0,
         reLeadingUnderscore = /^_/;
     
-    function sleeve(ns) {
-        var _sleeve;
+    function piper(ns) {
+        var _pipe;
         
         // generate a namespace if one was not defined
-        ns = ns || ('sleeve' + (counter++));
+        ns = ns || ('evtpipe' + (counter++));
         
-        _sleeve = function(name) {
+        _pipe = function(name) {
             return eve.apply(eve, [ns + '.' + name].concat(Array.prototype.slice.call(arguments, 1)));
         };
         
         // make the simple emit function, which maps to sleeve
-        _sleeve.emit = _sleeve;
+        _pipe.emit = _pipe;
         
         // check
-        _sleeve.check = function() {
-            var checkSleeve = sleeve(), // create a new sleeve to handle result checking
-                results = _sleeve.apply(_sleeve, Array.prototype.slice.call(arguments)) || [];
+        _pipe.check = function() {
+            var checkSleeve = piper(), // create a new sleeve to handle result checking
+                results = _pipe.apply(_pipe, Array.prototype.slice.call(arguments)) || [];
                 
             // iterate through the results
             setTimeout(function() {
@@ -392,7 +392,7 @@ var sleeve = (function() {
         // and allow us to map original functions to "private" implementations
         ['_on', '_once', 'unbind', 'listeners'].forEach(function(fnName) {
             // map eve functions to sleeve
-            _sleeve[fnName] = function(name) {
+            _pipe[fnName] = function(name) {
                 var targetFn = eve[fnName.replace(reLeadingUnderscore, '')];
                 
                 return targetFn.apply(eve, [ns + '.' + name].concat(Array.prototype.slice.call(arguments, 1)));
@@ -401,22 +401,21 @@ var sleeve = (function() {
     
         // create chainable versions of on and once
         ['on', 'once'].forEach(function(fnName) {
-            _sleeve[fnName] = function() {
-                _sleeve['_' + fnName].apply(_sleeve, Array.prototype.slice.call(arguments));
-                return _sleeve;
+            _pipe[fnName] = function() {
+                _pipe['_' + fnName].apply(_pipe, Array.prototype.slice.call(arguments));
+                return _pipe;
             };
         });
         
         // map nt
-        _sleeve.nt = function() {
+        _pipe.nt = function() {
             return eve.nt().slice(ns.length + 1);
         };
         
         // map a reference to eve to this sleeve
-        _sleeve.eve = eve;
-        _sleeve.ns = function() { return ns; };
+        _pipe.ns = function() { return ns; };
         
-        return _sleeve;
+        return _pipe;
     } // Sleeve
 
     function Bridge(eve, opts) {
@@ -484,10 +483,12 @@ var sleeve = (function() {
     };
 
     
-    var exports = sleeve;
-    exports.bridge = function(instance, transport) {
+    piper.bridge = function(instance, transport) {
         return new Bridge(instance, transport);
     };
     
-    return exports;
-})();
+    piper.eve = eve;
+    
+    (typeof module != "undefined" && module.exports) ? (module.exports = piper) :
+        (typeof define != "undefined" ? (define('piper', [], function() { return piper; })) : (glob.piper = piper));
+})(this);

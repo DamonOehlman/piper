@@ -1,38 +1,38 @@
-var assert = require('assert'),
-    sleeve = require('../')();
+var expect = require('chai').expect,
+    pipe = require('./helpers/piper')();
     
 describe('events raised can be checked', function() {
-    it('sleeve has an check handler', function() {
-        assert.ok(sleeve.check);
+    it('pipe has an check handler', function() {
+        expect(pipe.check).to.exist;
     });
     
     it('check passes with no events', function(done) {
-        sleeve.check('boo').on('pass', done);
+        pipe.check('boo').on('pass', done);
     });
     
     it('check passes with events that return no value', function(done) {
-        sleeve.on('hooray', function() {
+        pipe.on('hooray', function() {
         });
         
-        sleeve.check('hooray').on('pass', done);
+        pipe.check('hooray').on('pass', done);
     });
     
     it('check responds to falsy return values', function(done) {
-        sleeve.once('boo', function() {
+        pipe.once('boo', function() {
             return false;
         });
         
-        sleeve.check('boo').on('fail', done);
+        pipe.check('boo').on('fail', done);
     });
     
     it('check waits when handlers return a function', function(done) {
-        sleeve.once('hi', function() {
+        pipe.once('hi', function() {
             return function(callback) {
                 setTimeout(callback, 1000);
             };
         });
         
-        var checker = sleeve.check('hi');
+        var checker = pipe.check('hi');
         
         // delay adding the checker for 200ms
         setTimeout(function() {

@@ -2,8 +2,8 @@ var interleave = require('interleave');
 
 desc('build the client files');
 task('build.client', function() {
-    interleave(['src/sleeve.browser.js'], {
-        output: 'sleeve.js',
+    interleave(['src/piper.browser.js'], {
+        output: 'piper.js',
         after: ['uglify'],
         concat: true
     });

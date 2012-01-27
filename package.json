@@ -1,11 +1,11 @@
 {
-    "name": "sleeve",
-    "description": "Eve messaging for node (with goodies)",
+    "name": "piper",
+    "description": "Piper - Amazing Event Handling and Routing using Eve",
     "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
     "tags": ["eve", "pubsub"],
     "version": "0.0.1",
     
-    "main": "_lib-generated/sleeve.js",
+    "main": "_lib-generated/piper.js",
     "engines": { "node": ">= 0.4.x < 0.7.0" },
         
     "dependencies": {
@@ -18,11 +18,11 @@
     
     "repository": {
         "type": "git",
-        "url": "http://github.com/sidelab/sleeve.git"
+        "url": "http://github.com/sidelab/piper.git"
     },
     
     "bugs": {
-        "url": "http://github.com/sidelab/sleeve/issues"
+        "url": "http://github.com/sidelab/piper/issues"
     },
     
     "contributors": [
