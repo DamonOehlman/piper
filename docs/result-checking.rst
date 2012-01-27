@@ -1,3 +1,5 @@
+.. _result-checking:
+
 ===============
 Result Checking
 ===============

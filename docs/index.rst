@@ -7,6 +7,7 @@ Contents
    :maxdepth: 2
    
    namespacing
+   bridging
    chaining
    result-checking
 
