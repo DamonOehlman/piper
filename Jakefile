@@ -7,12 +7,20 @@ task('build.client', function() {
         after: ['uglify'],
         concat: true
     });
+
+    interleave(['src/transports/browser'], {
+        path: 'dist/transports'
+    });
 });
 
 desc('build the node files');
 task('build.node', function() {
     interleave('src/node-wrappers', {
         path: '_lib-generated'
+    });
+
+    interleave('src/transports/node', {
+        path: '_lib-generated/transports'
     });
 });
 

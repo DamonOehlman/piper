@@ -1,11 +1,14 @@
 (function(glob) {
     //= github://DmitryBaranovskiy/eve/eve.js
     
+    // create a shim for debug, simply ignores the messages at this stage.
+    function debug() {};
+    
     //= piper
     //= bridge
     
-    piper.bridge = function(instance, transport) {
-        return new Bridge(instance, transport);
+    piper.bridge = function(transports) {
+        return new Bridge(eve, transports);
     };
     
     piper.eve = eve;

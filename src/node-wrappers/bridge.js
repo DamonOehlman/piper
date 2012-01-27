@@ -1,5 +1,7 @@
 //= ../bridge
 
-module.exports = function(eve, opts) {
-    return new Bridge(eve, opts);
+module.exports = function(eve) {
+    return function(transports) {
+        return new Bridge(eve, transports);
+    };
 };

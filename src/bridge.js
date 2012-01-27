@@ -1,34 +1,21 @@
-function Bridge(eve, opts) {
+function Bridge(eveInstance, transports) {
     // save a reference to eve
-    this.eve = eve;
+    this.eve = eveInstance;
     
     // create the bindings array
     this.bindings = {};
-
-    // initialise default options
-    opts = opts || {};
-
-    // create the redis connection
-    this.client = redis.createClient(
-        opts.host,
-        opts.port,
-        opts
-    );
     
-    // create the redis connection
-    this.channel = opts.channel || 'eve-redis';
-}
-
-Bridge.prototype.cancel = function() {
-    // iterate through the binding and remove them
-    for (var key in this.bindings) {
-        this.eve.unbind(key, this.bindings[key]);
+    // if transports is defined, but not an array, then wrap in one
+    if (typeof transports != 'undefined' && !Array.isArray(transports)) {
+        transports = [transports];
     }
     
-    // reset the bindings
-    this.bindings = {};
-    
-    return this;
+    // add the initial transports
+    this.transports = transports || [];
+}
+
+Bridge.prototype.addTransport = function(transport) {
+    this.transports.push(transport);
 };
 
 Bridge.prototype.pub = function(events) {
@@ -45,12 +32,13 @@ Bridge.prototype.pub = function(events) {
                     };
 
                 // send the message
-                try {
-                    bridge.client.publish(bridge.channel, JSON.stringify(msg));
-                }
-                catch (e) {
-                    bridge.emit('error', new Error('Unable to route "' + evtName + '" event, could not serialize JSON'));
-                }
+                // serialize the message as json
+                msg = JSON.stringify(msg);
+                
+                // iterate through the transports and send the message
+                bridge.transports.forEach(function(transport) {
+                    transport.send(msg);
+                });
             });
         }
     });
@@ -59,5 +47,44 @@ Bridge.prototype.pub = function(events) {
 };
 
 Bridge.prototype.sub = function() {
+    var bridge = this;
+    
+    // list for events on each of the transports
+    this.transports.forEach(function(transport) {
+        // TODO: wire up subscriptions
+        transport.sub(function(json) {
+            try {
+                // deconstruct message
+                var msg = JSON.parse(json);
+
+                // fire the event
+                bridge.eve.apply(bridge.eve, [msg.name, null].concat(msg.args ? msg.args : []));
+            }
+            catch (e) {
+                // dodgy message, ignoring...
+            }
+        });
+    });
+    
+    return this;
+};
+
+Bridge.prototype.unpub = function() {
+    // iterate through the binding and remove them
+    for (var key in this.bindings) {
+        this.eve.unbind(key, this.bindings[key]);
+    }
+    
+    // reset the bindings
+    this.bindings = {};
+    
+    return this;
+};
+
+Bridge.prototype.unsub = function() {
+    this.transports.forEach(function(transport) {
+        transport.unsub();
+    });
+    
     return this;
 };
