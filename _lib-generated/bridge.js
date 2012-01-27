@@ -30,7 +30,7 @@ Bridge.prototype.pub = function(events) {
                 
                 // if the last argument is the bridge, then return as we have generated it
                 // from a subscription
-                if (lastArg = arguments[arguments.length - 1] === bridge) return;
+                if (arguments[arguments.length - 1] === bridge) return;
                 
                 // serialize the args
                 args = [bridge.eve.nt()].concat(Array.prototype.slice.call(arguments));
