@@ -1,66 +1,61 @@
+.. highlight:: js
+
 .. _bridging:
 
 ========
 Bridging
 ========
 
-Bridging is probably one of the most powerful features of Piper.  Given the way in which eve handles events (and thus Piper) it becomes possible to route events across different process boundaries using JSON serialization.  
+Bridging is probably one of the most powerful features of Piper.  Given the way in which eve handles events (and thus Piper) it becomes possible to route events across different process boundaries using JSON serialization.
 
-At this stage, the following transports are available:
-
-Redis
-=====
-
-Powered By: `redis <https://github.com/mranney/node_redis>`_
-
-.. literalinclude:: ../examples/transports/redis.js
-    :language: js
-
-Now, if you were to run this example, while running the ``MONITOR`` command within the redis-cli you should see something like::
-
-    redis 127.0.0.1:6379> monitor
-    OK
-    1327677978.544554 "monitor"
-    1327678022.363266 "info"
-    1327678022.364069 "publish" "eve-piper" "[\"test.hit\",\"car\"]"
+Creating a bridge is really simple::
     
+    // create the transport
+    var transport = piper.createTransport('transport-name', args*);
+    
+    // create the bridge
+    var bridge = piper.bridge(transport);
+    
+Publishing Events
+=================
 
-**Transport Source and Test Suite:**
+If you are creating a server of some kind, then you may want to publish your events via one of the available transports.  If you have created your bridge as outlined above this can be achieved very simply::
+    
+    // now publish events via the selected transport
+    bridge.pub();
+    
+Selective Publishing
+--------------------
 
-https://github.com/sidelab/piper/blob/master/src/transports/node/redis.js
-https://github.com/sidelab/piper/blob/master/test/bridging/redis.js
+If you are asking, *"What if I don't want to publish all my events?"* then I'm with you there.  The ``pub()`` function can take arguments that specify the eve event patterns that you wish to publish.  If no arguments are supplied, then ``*`` events are published.
 
+It's also worth noting two things here:
 
-Socket.IO
-=========
+1. When using eve, the wildcard in a pattern is optional.  For instance the pattern ``server.*`` and ``server`` are equivalent.
 
-*Incomplete*
+2. The ``pub`` function works on the raw event names and doesn't take into account the Piper namespaces.  So if you have created a pipe with the namespace of tests, and want to publish all those events, you should call ``bridge.pub('test')``.
 
-Powered By: `socket.io <https://github.com/LearnBoost/socket.io>`_
+Here's an example::
 
-**Transport Source and Test Suite:**
+    // just publish server, player and test events
+    bridge.pub('server.*', 'player', 'test');
+    
+Unpublishing
+------------
 
-https://github.com/sidelab/piper/blob/master/src/transports/node/socket.io.js
-https://github.com/sidelab/piper/blob/master/test/bridging/socket.io.js
+To cancel the publication of events, you simply call the ``unpub()`` function on the bridge::
 
-Pure WebSockets
-===============
+    // cancel publishing
+    bridge.unpub();
 
-Powered By: `ws <https://github.com/einaros/ws>`_
+Subscribing to Remote Events
+============================
 
-**Transport Source and Test Suite:**
+Subscribing to events is just as simple::
 
-https://github.com/sidelab/piper/blob/master/src/transports/node/ws.js
-https://github.com/sidelab/piper/blob/master/test/bridging/ws.js
+    // subscribe to events on the current bridge
+    bridge.sub();
+    
+Once you have created a subscription, events will be routed passed through even in the usual way once the bridge captures events coming through the subscription.  
 
-
-ZeroMQ (0MQ)
-============
-
-Powered by: `zmq <https://github.com/JustinTulloss/zeromq.node>`_
-
-**Transport Source and Test Suite:**
-
-https://github.com/sidelab/piper/blob/master/src/transports/node/zmq.js
-https://github.com/sidelab/piper/blob/master/test/bridging/zmq.js
-
+At the moment, there is not ability to selectively subscribe to certain events.  Remotely routed events can be detected, however, as the bridge is added as a final argument in the event handler.

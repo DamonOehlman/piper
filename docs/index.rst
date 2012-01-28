@@ -4,11 +4,12 @@ Contents
 ========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    
    getting-started
    namespacing
    bridging
+   bridging-transports
    chaining
    result-checking
 

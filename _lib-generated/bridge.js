@@ -26,10 +26,16 @@ Bridge.prototype.addTransport = function(transport) {
     }
 };
 
-Bridge.prototype.pub = function(events) {
-    var bridge = this;
+Bridge.prototype.pub = function() {
+    var bridge = this,
+        events = Array.prototype.slice.call(arguments);
+        
+    // if no events were specified, publish all
+    if (events.length === 0) {
+        events.push('*');
+    }
     
-    (events || ['*']).forEach(function(pattern) {
+    events.forEach(function(pattern) {
         if (! bridge.bindings[pattern]) {
             bridge.eve.on(pattern, bridge.bindings[pattern] = function() {
                 var args, msg;
