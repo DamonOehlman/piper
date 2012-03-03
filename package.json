@@ -13,7 +13,8 @@
     
     "devDependencies": {
         "chai": "*",
-        "interleave": "0.1.x"
+        "interleave": "0.1.x",
+        "mocha": "*"
     },
     
     "repository": {
@@ -25,6 +26,8 @@
         "url": "http://github.com/sidelab/piper/issues"
     },
     
+    "scripts": { "test": "mocha --reporter spec" },
+
     "contributors": [
     ]
 }
