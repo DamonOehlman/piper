@@ -19,11 +19,11 @@
     
     "repository": {
         "type": "git",
-        "url": "http://github.com/sidelab/piper.git"
+        "url": "http://github.com/DamonOehlman/piper.git"
     },
     
     "bugs": {
-        "url": "http://github.com/sidelab/piper/issues"
+        "url": "http://github.com/DamonOehlman/piper/issues"
     },
     
     "scripts": { "test": "mocha --reporter spec" },
