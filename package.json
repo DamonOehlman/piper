@@ -7,7 +7,7 @@
     "pubsub"
   ],
   "version": "0.2.0",
-  "main": "pkg/cjs/piper.js",
+  "main": "lib/piper.js",
   "engines": {
     "node": ">= 0.4.x < 0.7.0"
   },

@@ -137,6 +137,8 @@ function piper(ns) {
 // patch in eve
 piper.eve = eve;
 
+//= core/bridge
+
 piper.bridge = function(transports) {
     return new Bridge(eve, transports);
 };
