@@ -1,33 +1,33 @@
 {
-    "name": "piper",
-    "description": "Amazing Event Handling and Routing using Eve",
-    "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
-    "tags": ["eve", "pubsub"],
-    "version": "0.1.1",
-    
-    "main": "pkg/cjs/piper.js",
-    "engines": { "node": ">= 0.4.x < 0.7.0" },
-        
-    "dependencies": {
-        "eve": "git://github.com/DmitryBaranovskiy/eve.git"
-    },
-    
-    "devDependencies": {
-        "chai": "*",
-        "mocha": "*"
-    },
-    
-    "repository": {
-        "type": "git",
-        "url": "http://github.com/DamonOehlman/piper.git"
-    },
-    
-    "bugs": {
-        "url": "http://github.com/DamonOehlman/piper/issues"
-    },
-    
-    "scripts": { "test": "mocha --reporter spec" },
-
-    "contributors": [
-    ]
+  "name": "piper",
+  "description": "Amazing Event Handling and Routing using Eve",
+  "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
+  "tags": [
+    "eve",
+    "pubsub"
+  ],
+  "version": "0.2.0",
+  "main": "pkg/cjs/piper.js",
+  "engines": {
+    "node": ">= 0.4.x < 0.7.0"
+  },
+  "dependencies": {
+    "eve": "git://github.com/DmitryBaranovskiy/eve.git"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DamonOehlman/piper.git"
+  },
+  "bugs": {
+    "url": "http://github.com/DamonOehlman/piper/issues"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "contributors": [],
+  "optionalDependencies": {}
 }
