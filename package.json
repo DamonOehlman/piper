@@ -5,15 +5,15 @@
     "tags": ["eve", "pubsub"],
     "version": "0.1.1",
     
-    "main": "_lib-generated/piper.js",
+    "main": "pkg/cjs/piper.js",
     "engines": { "node": ">= 0.4.x < 0.7.0" },
         
     "dependencies": {
+        "eve": "git://github.com/DmitryBaranovskiy/eve.git"
     },
     
     "devDependencies": {
         "chai": "*",
-        "interleave": "0.1.x",
         "mocha": "*"
     },
     

@@ -1,4 +1,5 @@
-var eve = require('./eve');
+var eve = require('eve');
+
 
 var counter = 0,
     reLeadingUnderscore = /^_/,
@@ -132,16 +133,13 @@ function piper(ns) {
     _pipe.ns = function() { return ns; };
     
     return _pipe;
-} // Sleeve
+}
 
+// patch in eve
+piper.eve = eve;
 
-exports = module.exports = function(ns) {
-    return piper(ns);
+piper.bridge = function(transports) {
+    return new Bridge(eve, transports);
 };
 
-exports.bridge = require('./bridge')(eve);
-exports.eve = eve;
-
-exports.createTransport = function(name) {
-    return require('./transports/' + name).apply(null, Array.prototype.slice.call(arguments, 1));
-};
+module.exports = piper;
