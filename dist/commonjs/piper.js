@@ -1,4 +1,6 @@
-// req: eve
+
+var eve = require('eve');
+
 
 var counter = 0,
     reLeadingUnderscore = /^_/,
@@ -275,3 +277,7 @@ Bridge.prototype.unsub = function() {
 piper.bridge = function(transports) {
     return new Bridge(eve, transports);
 };
+
+if (typeof piper != 'undefined') {
+    module.exports = piper;
+}
