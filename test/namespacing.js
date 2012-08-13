@@ -1,11 +1,11 @@
-var expect = require('chai').expect,
+var expect = require('expect.js'),
     one = require('./helpers/piper')('1'),
     two = require('./helpers/piper')('2');
     
 describe('events raised in one namespace are not triggered in the other', function() {
     it('namespaced functions are valid and different', function() {
-        expect(one.on).to.exist;
-        expect(two.on).to.exist;
+        expect(one.on).to.be.ok();
+        expect(two.on).to.be.ok();
         expect(one).to.not.equal(two);
     });
     

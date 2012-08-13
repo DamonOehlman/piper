@@ -1,14 +1,14 @@
-var expect = require('chai').expect,
+var expect = require('expect.js'),
     piper = require('./helpers/piper'),
     pipe = piper();
     
 describe('events get raised through the on handler', function() {
     it('pipe has an on handler', function() {
-        expect(pipe.on).to.exist;
+        expect(pipe.on).to.be.ok();
     });
     
     it('the pipe has a namespace', function() {
-        expect(pipe.ns()).to.exist;
+        expect(pipe.ns()).to.be.ok();
     });
 
     it('can raise an event through on', function(done) {

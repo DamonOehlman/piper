@@ -1,9 +1,9 @@
-var expect = require('chai').expect,
+var expect = require('expect.js'),
     pipe = require('./helpers/piper')();
     
 describe('events raised can be checked', function() {
     it('pipe has an check handler', function() {
-        expect(pipe.check).to.exist;
+        expect(pipe.check).to.be.ok();
     });
     
     it('check passes with no events', function(done) {

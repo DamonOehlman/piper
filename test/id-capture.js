@@ -1,4 +1,4 @@
-var expect = require('chai').expect,
+var expect = require('expect.js'),
     piper = require('./helpers/piper'),
     pipe = piper();
     
@@ -14,7 +14,7 @@ describe('events get raised through the on handler', function() {
     
     it('will not include an id parameter for exact event handlers', function(done) {
         pipe.once('hi.#test', function(id) {
-            expect(id).to.not.exist;
+            expect(id).to.not.be.ok();
             done();
         });
         
