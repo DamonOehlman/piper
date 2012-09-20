@@ -25,6 +25,25 @@ describe('events raised can be checked', function() {
         pipe.check('boo').on('fail', done);
     });
     
+    it('deals with return functions that don\'t accept a callback parameter (and pass)', function(done) {
+        pipe.once('wonder', function() {
+            return function() {
+            };
+        });
+        
+        pipe.check('wonder').on('pass', done);
+    });
+    
+    it('deals with return functions that don\'t accept a callback parameter (and fail)', function(done) {
+        pipe.once('whynot', function() {
+            return function() {
+                return false;
+            };
+        });
+        
+        pipe.check('whynot').on('fail', done);
+    });
+    
     it('check waits when handlers return a function', function(done) {
         pipe.once('hi', function() {
             return function(callback) {
