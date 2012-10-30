@@ -1,0 +1,17 @@
+{
+  "name": "piper",
+  "repo": "DamonOehlman/piper",
+  "description": "Amazing Event Handling and Routing using Eve",
+  "version": "0.2.5",
+  "keywords": [
+    "eve",
+    "pubsub"
+  ],
+  "dependencies": {
+    "DamonOehlman/eve": "*"
+  },
+  "main": "piper.js",
+  "scripts": [
+    "piper.js"
+  ]
+}
