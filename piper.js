@@ -1,5 +1,26 @@
+/* ~piper~
+ * 
+ * Amazing Event Handling and Routing using Eve
+ * 
+ * -meta---
+ * version:    0.2.5
+ * builddate:  2012-10-30T02:21:46.904Z
+ * generator:  interleave@0.5.24
+ * 
+ * 
+ * 
+ */ 
 
-define('piper', ['eve'], function(eve) {
+// umdjs returnExports pattern: https://github.com/umdjs/umd/blob/master/returnExports.js
+(function (root, factory) {
+    if (typeof exports === 'object') {
+        module.exports = factory(require('eve'));
+    } else if (typeof define === 'function' && define.amd) {
+        define(['eve'], factory);
+    } else {
+        root['piper'] = factory(root['eve']);
+    }
+}(this, function (eve) {
     
     var counter = 0,
         reLeadingUnderscore = /^_/,
@@ -289,4 +310,4 @@ define('piper', ['eve'], function(eve) {
     };
     
     return typeof piper != 'undefined' ? piper : undefined;
-});
+}));

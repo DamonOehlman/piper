@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 build:
-	@./node_modules/.bin/interleave build --wrap
+	@./node_modules/.bin/interleave --output ./
 
 test:
 	@mocha --reporter spec
