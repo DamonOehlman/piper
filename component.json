@@ -8,7 +8,7 @@
     "pubsub"
   ],
   "dependencies": {
-    "DamonOehlman/eve": "*"
+    "DmitryBaranovskiy/eve": "*"
   },
   "main": "piper.js",
   "scripts": [
