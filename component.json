@@ -8,10 +8,11 @@
     "pubsub"
   ],
   "dependencies": {
-    "DmitryBaranovskiy/eve": "*"
+    "adobe-webplatform/eve": "*"
   },
-  "main": "piper.js",
+  "main": "index.js",
   "scripts": [
-    "piper.js"
+    "index.js",
+    "bridge.js"
   ]
 }
