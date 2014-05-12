@@ -2,7 +2,7 @@
   "name": "piper",
   "repo": "DamonOehlman/piper",
   "description": "Amazing Event Handling and Routing using Eve",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "keywords": [
     "eve",
     "pubsub"
