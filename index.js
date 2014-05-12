@@ -21,6 +21,9 @@ var piper = module.exports = function(ns) {
   // make the simple emit function, which maps to sleeve
   _pipe.emit = _pipe;
 
+  // bind eve into the pipe also
+  _pipe.eve = eve;
+
   // check
   _pipe.check = function() {
     var checkPipe = piper(), // create a new sleeve to handle result checking
