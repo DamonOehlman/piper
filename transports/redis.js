@@ -1,11 +1,12 @@
 var redis = require('redis');
 
-module.exports = function(channel, host, port, opts) {
-  // create the redis connection
-  var client = redis.createClient(host, port, opts);
+module.exports = function(opts) {
+  var host = (opts || {}).host || 'localhost';
+  var port = (opts || {}).port || 6379;
+  var channel = (opts || {}).channel || 'eve-piper';
 
-  // ensure the channel has been specified
-  channel = channel || 'eve-piper';
+  // create the redis connection
+  var client = redis.createClient(port, host, opts);
 
   return {
     send: function(msg) {
