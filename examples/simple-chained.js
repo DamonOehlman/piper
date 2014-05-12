@@ -1,11 +1,10 @@
-var piper = require('../'),
-    pipe = piper('ns');
+var pipe = require('..')('sample-ns');
 
 pipe
-    .on('*', function() {
-        console.log('some event fired');
-    })
-    .on('load', function() {
-        console.log('loaded');
-    })
-    .emit('load');
+.on('*', function() {
+  console.log('event fired "' + pipe.nt() + '" which maps to eve event "' + pipe.eve.nt() + '"');
+})
+.on('load', function() {
+  console.log('loaded');
+})
+.emit('load');

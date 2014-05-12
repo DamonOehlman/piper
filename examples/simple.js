@@ -1,12 +1,11 @@
-var piper = require('../'),
-    pipe = piper();
+var pipe = require('..')();
 
 pipe.on('*', function() {
-    console.log('some event fired');
+  console.log('some event fired');
 });
 
 pipe.on('load', function() {
-    console.log('loaded');
+  console.log('loaded');
 });
 
 pipe('load');
