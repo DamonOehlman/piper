@@ -8,7 +8,7 @@ var bridge;
 
 describe('publishing', function() {
   it('can create the transport', function() {
-    transport = require('../transports/redis')('test');
+    transport = require('../transports/redis')({ channel: 'test' });
   });
 
   it('can create the bridge', function() {
