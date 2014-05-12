@@ -11,8 +11,10 @@
     "eve": "~0.4"
   },
   "devDependencies": {
+    "chai": "^1",
+    "expect.js": "~0.3",
     "mocha": "^1",
-    "expect.js": "~0.3"
+    "redis": "~0.10"
   },
   "repository": {
     "type": "git",
