@@ -24,6 +24,7 @@
     "url": "http://github.com/DamonOehlman/piper/issues"
   },
   "scripts": {
+    "gendocs": "gendocs > README.md",
     "test": "mocha --reporter spec"
   },
   "homepage": "https://github.com/DamonOehlman/piper",

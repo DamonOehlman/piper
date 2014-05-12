@@ -8,6 +8,17 @@ var counter = 0;
 var reLeadingUnderscore = /^_/;
 var reEveDelimiter = /[\/\.]/;
 
+/**
+  # piper
+
+  Piper is small module that provides automatic namespacing helpers when
+  working with [eve](https://github.com/adobe-webplatform/eve).
+
+  ## Example Usage
+
+  <<< examples/simple-chained.js
+
+**/
 var piper = module.exports = function(ns) {
   var _pipe;
 
