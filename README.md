@@ -24,6 +24,37 @@ pipe
 
 ```
 
+## Example Usage: Bridge via Redis
+
+In addition to namespacing helpers, piper also provides some transport
+helpers for directing messages via a network transport (such as
+redis pubsub):
+
+```js
+var piper = require('piper');
+var testpipe = piper('test');
+
+// publish events via redis
+var bridge = piper.bridge(require('piper/transports/redis')({
+  host: 'localhost',
+  channel: 'redis-test-channel'
+}));
+
+// start the bridge publishing
+bridge.pub();
+
+// fire an event
+testpipe('hit', 'car');
+
+```
+
+This example would display something similar to the following if you were
+using the `MONITOR` command in the redis-cli:
+
+```
+1399858559.348511 [0 127.0.0.1:39324] "publish" "redis-test-channel" "[\"test.hit\",\"car\"]"
+```
+
 ## License(s)
 
 ### MIT
